@@ -1,0 +1,999 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <title>99 Problems — Origin Story (Verifiable)</title>
+
+  <style>
+
+    :root{
+
+      --bg:#0b0e14;
+
+      --card:#111827;
+
+      --muted:#94a3b8;
+
+      --text:#e5e7eb;
+
+      --accent:#60a5fa;
+
+      --accent2:#a78bfa;
+
+      --border:rgba(255,255,255,.08);
+
+      --shadow: 0 20px 60px rgba(0,0,0,.45);
+
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+
+      margin:0;
+
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+
+      background:
+
+        radial-gradient(1200px 800px at 20% -10%, rgba(96,165,250,.18), transparent 60%),
+
+        radial-gradient(900px 700px at 90% 0%, rgba(167,139,250,.14), transparent 55%),
+
+        radial-gradient(900px 900px at 40% 110%, rgba(96,165,250,.10), transparent 60%),
+
+        var(--bg);
+
+      color:var(--text);
+
+      line-height:1.45;
+
+      padding: 28px 16px 60px;
+
+    }
+
+    .wrap{
+
+      max-width: 920px;
+
+      margin: 0 auto;
+
+    }
+
+    header{
+
+      display:flex;
+
+      align-items:flex-start;
+
+      justify-content:space-between;
+
+      gap:16px;
+
+      margin-bottom:18px;
+
+    }
+
+    .title{
+
+      display:flex;
+
+      flex-direction:column;
+
+      gap:6px;
+
+    }
+
+    h1{
+
+      margin:0;
+
+      font-size: clamp(20px, 3vw, 34px);
+
+      letter-spacing:-0.02em;
+
+    }
+
+    .subtitle{
+
+      margin:0;
+
+      color:var(--muted);
+
+      font-size: 14px;
+
+      max-width: 64ch;
+
+    }
+
+    .pillbar{
+
+      display:flex;
+
+      gap:10px;
+
+      flex-wrap:wrap;
+
+      margin-top: 8px;
+
+    }
+
+    .pill{
+
+      font-size:12px;
+
+      color: rgba(255,255,255,.86);
+
+      border:1px solid var(--border);
+
+      padding:6px 10px;
+
+      border-radius:999px;
+
+      background: rgba(255,255,255,.03);
+
+      backdrop-filter: blur(8px);
+
+    }
+
+    .card{
+
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+
+      border:1px solid var(--border);
+
+      border-radius: 18px;
+
+      box-shadow: var(--shadow);
+
+      overflow:hidden;
+
+    }
+
+    .toolbar{
+
+      display:flex;
+
+      align-items:center;
+
+      justify-content:space-between;
+
+      gap: 12px;
+
+      padding: 14px 14px;
+
+      border-bottom:1px solid var(--border);
+
+      background: rgba(0,0,0,.25);
+
+    }
+
+    .controls{
+
+      display:flex;
+
+      gap:10px;
+
+      flex-wrap:wrap;
+
+      align-items:center;
+
+      justify-content:flex-end;
+
+    }
+
+    .btn{
+
+      appearance:none;
+
+      border:1px solid var(--border);
+
+      background: rgba(255,255,255,.04);
+
+      color: var(--text);
+
+      padding: 9px 12px;
+
+      border-radius: 12px;
+
+      font-size: 13px;
+
+      cursor:pointer;
+
+      transition: transform .05s ease, background .2s ease, border-color .2s ease;
+
+      display:inline-flex;
+
+      align-items:center;
+
+      gap:8px;
+
+      user-select:none;
+
+      white-space:nowrap;
+
+    }
+
+    .btn:hover{
+
+      background: rgba(255,255,255,.07);
+
+      border-color: rgba(96,165,250,.35);
+
+    }
+
+    .btn:active{ transform: translateY(1px); }
+
+    .btn.primary{
+
+      border-color: rgba(96,165,250,.45);
+
+      background: rgba(96,165,250,.12);
+
+    }
+
+    .btn.primary:hover{
+
+      background: rgba(96,165,250,.16);
+
+    }
+
+    .btn .dot{
+
+      width:8px;height:8px;border-radius:50%;
+
+      background: var(--accent);
+
+      box-shadow: 0 0 0 4px rgba(96,165,250,.14);
+
+    }
+
+    .status{
+
+      font-size: 12px;
+
+      color: var(--muted);
+
+      display:flex;
+
+      align-items:center;
+
+      gap: 10px;
+
+      flex-wrap:wrap;
+
+    }
+
+    .status strong{ color: rgba(255,255,255,.9); font-weight:600; }
+
+    .content{
+
+      padding: 18px 18px 20px;
+
+    }
+
+    .section{
+
+      padding: 16px 0;
+
+      border-top:1px solid var(--border);
+
+    }
+
+    .section:first-child{ border-top:0; padding-top: 6px; }
+
+    .kicker{
+
+      text-transform: uppercase;
+
+      letter-spacing: .14em;
+
+      font-size: 11px;
+
+      color: rgba(255,255,255,.6);
+
+      margin:0 0 8px;
+
+    }
+
+    h2{
+
+      margin:0 0 8px;
+
+      font-size: 18px;
+
+      letter-spacing:-0.01em;
+
+    }
+
+    p{
+
+      margin: 10px 0;
+
+      color: rgba(255,255,255,.92);
+
+      max-width: 74ch;
+
+    }
+
+    .muted{ color: var(--muted); }
+
+    .quote{
+
+      border-left: 3px solid rgba(96,165,250,.55);
+
+      padding: 10px 12px;
+
+      margin: 12px 0;
+
+      background: rgba(96,165,250,.06);
+
+      border-radius: 12px;
+
+      color: rgba(255,255,255,.92);
+
+      max-width: 74ch;
+
+    }
+
+    .grid{
+
+      display:grid;
+
+      grid-template-columns: 1fr;
+
+      gap: 12px;
+
+      margin-top: 14px;
+
+    }
+
+    @media (min-width: 860px){
+
+      .grid{ grid-template-columns: 1.2fr .8fr; align-items:start; }
+
+    }
+
+    .side{
+
+      border:1px solid var(--border);
+
+      background: rgba(255,255,255,.03);
+
+      border-radius: 16px;
+
+      padding: 14px;
+
+    }
+
+    .side h3{
+
+      margin:0 0 8px;
+
+      font-size: 14px;
+
+      letter-spacing:-0.01em;
+
+    }
+
+    .links{
+
+      display:flex;
+
+      flex-direction:column;
+
+      gap:10px;
+
+      margin: 10px 0 0;
+
+      padding:0;
+
+      list-style:none;
+
+    }
+
+    .link{
+
+      display:flex;
+
+      flex-direction:column;
+
+      gap:4px;
+
+      padding: 10px 10px;
+
+      border-radius: 14px;
+
+      border:1px solid var(--border);
+
+      background: rgba(0,0,0,.18);
+
+    }
+
+    .link a{
+
+      color: var(--accent);
+
+      text-decoration:none;
+
+      word-break: break-word;
+
+      font-size: 13px;
+
+    }
+
+    .link a:hover{ text-decoration: underline; }
+
+    .link small{
+
+      color: var(--muted);
+
+      font-size: 12px;
+
+    }
+
+    .timeline{
+
+      display:flex;
+
+      flex-direction:column;
+
+      gap: 10px;
+
+      margin-top: 12px;
+
+    }
+
+    .event{
+
+      display:flex;
+
+      gap: 10px;
+
+      align-items:flex-start;
+
+      padding: 10px;
+
+      border:1px solid var(--border);
+
+      background: rgba(255,255,255,.02);
+
+      border-radius: 14px;
+
+    }
+
+    .year{
+
+      font-size: 12px;
+
+      font-weight: 700;
+
+      color: rgba(255,255,255,.92);
+
+      background: rgba(167,139,250,.12);
+
+      border:1px solid rgba(167,139,250,.35);
+
+      padding: 6px 8px;
+
+      border-radius: 999px;
+
+      min-width: 62px;
+
+      text-align:center;
+
+    }
+
+    .event p{ margin:0; font-size: 13px; color: rgba(255,255,255,.9); }
+
+    footer{
+
+      margin-top: 14px;
+
+      color: var(--muted);
+
+      font-size: 12px;
+
+      display:flex;
+
+      justify-content:space-between;
+
+      gap: 10px;
+
+      flex-wrap:wrap;
+
+      padding: 0 4px;
+
+    }
+
+    .toast{
+
+      position: fixed;
+
+      left: 50%;
+
+      bottom: 18px;
+
+      transform: translateX(-50%);
+
+      background: rgba(17,24,39,.92);
+
+      border:1px solid var(--border);
+
+      color: rgba(255,255,255,.92);
+
+      padding: 10px 14px;
+
+      border-radius: 999px;
+
+      box-shadow: var(--shadow);
+
+      opacity:0;
+
+      pointer-events:none;
+
+      transition: opacity .2s ease, transform .2s ease;
+
+      font-size: 13px;
+
+      backdrop-filter: blur(8px);
+
+    }
+
+    .toast.show{
+
+      opacity:1;
+
+      transform: translateX(-50%) translateY(-4px);
+
+    }
+
+    /* "Poster mode": bigger, tighter, less UI */
+
+    .poster body {}
+
+    .poster .toolbar{ display:none; }
+
+    .poster .subtitle{ display:none; }
+
+    .poster .pillbar{ display:none; }
+
+    .poster .content{ padding: 24px 22px 22px; }
+
+    .poster .side{ display:none; }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="wrap">
+
+    <header>
+
+      <div class="title">
+
+        <h1>99 Problems — the origin story (with verification links)</h1>
+
+        <p class="subtitle">
+
+          A clean, post-ready explanation that avoids clickbait framing and includes links anyone can check.
+
+        </p>
+
+        <div class="pillbar" aria-hidden="true">
+
+          <span class="pill">No “I” voice</span>
+
+          <span class="pill">Story format</span>
+
+          <span class="pill">Links included</span>
+
+          <span class="pill">Copy-ready</span>
+
+        </div>
+
+      </div>
+
+      <div class="controls">
+
+        <button class="btn primary" id="copyBtn" title="Copy the story text">
+
+          <span class="dot" aria-hidden="true"></span> Copy text
+
+        </button>
+
+        <button class="btn" id="posterBtn" title="Toggle poster mode (clean screenshot layout)">
+
+          Poster mode
+
+        </button>
+
+      </div>
+
+    </header>
+
+    <main class="card" role="main">
+
+      <div class="toolbar">
+
+        <div class="status">
+
+          <span>Format: <strong id="modeLabel">Post</strong></span>
+
+          <span class="muted">•</span>
+
+          <span class="muted">Includes primary video + reference page</span>
+
+        </div>
+
+        <div class="controls">
+
+          <button class="btn" id="selectBtn" title="Select all story text">Select all</button>
+
+          <button class="btn" id="printBtn" title="Print / Save as PDF">Print</button>
+
+        </div>
+
+      </div>
+
+      <div class="content">
+
+        <div class="grid">
+
+          <article id="story">
+
+            <section class="section">
+
+              <p class="kicker">The real story</p>
+
+              <h2>Why people keep getting this wrong</h2>
+
+              <p>
+
+                The line “I got 99 problems but a bitch ain’t one” didn’t start as a Jay-Z invention — and it also isn’t a
+
+                “Jay-Z stole it” situation. The confusion mostly comes from clipped podcast moments and reposts that drop
+
+                the context.
+
+              </p>
+
+            </section>
+
+            <section class="section">
+
+              <p class="kicker">Origins</p>
+
+              <h2>Where the phrase came from</h2>
+
+              <p>
+
+                In the story told by Ice-T, the phrase surfaced during a casual conversation with Brother Marquis (from 2 Live Crew).
+
+                Marquis said a version of the line, and Ice-T immediately recognized it as a hook. With permission to run with it,
+
+                Ice-T built a full record around that concept years earlier.
+
+              </p>
+
+              <div class="quote" role="note">
+
+                The key detail: the phrase existed before it became a mainstream hook — it was part of hip-hop’s spoken culture first.
+
+              </div>
+
+            </section>
+
+            <section class="section">
+
+              <p class="kicker">Later</p>
+
+              <h2>What Jay-Z did (and what he didn’t do)</h2>
+
+              <p>
+
+                Jay-Z later used the same phrase as a hook for his own track — but built a different song and a different message.
+
+                His version isn’t Ice-T’s song rewritten; it’s a new record structured around separate themes like pressure,
+
+                profiling, fame, and legal trouble.
+
+              </p>
+
+              <p class="muted">
+
+                Reusing a well-known phrase and transforming it into a new concept is a common pattern in hip-hop lineage.
+
+              </p>
+
+            </section>
+
+            <section class="section">
+
+              <p class="kicker">Takeaway</p>
+
+              <h2>Bottom line</h2>
+
+              <p>
+
+                This story is best understood as evolution, not theft: a phrase moves through conversation, becomes a record,
+
+                and later gets reinterpreted into a different record by another artist. The “stole the song” angle is largely
+
+                an internet misread of what was meant.
+
+              </p>
+
+            </section>
+
+            <section class="section" id="verification">
+
+              <p class="kicker">Verification</p>
+
+              <h2>Links to verify</h2>
+
+              <p class="muted">
+
+                The first link is the exact YouTube Short being referenced. The second link provides a public reference page
+
+                that discusses the track history and credits.
+
+              </p>
+
+              <ul class="links">
+
+                <li class="link">
+
+                  <a href="https://youtube.com/shorts/ABNKZNQEpVY?si=wyoxlkQAUQB11pMo" target="_blank" rel="noopener noreferrer">
+
+                    YouTube Short: Ice-T explaining the origin of the “99 Problems” phrase
+
+                  </a>
+
+                  <small>Primary clip (watch and judge the context directly).</small>
+
+                </li>
+
+                <li class="link">
+
+                  <a href="https://en.wikipedia.org/wiki/99_Problems" target="_blank" rel="noopener noreferrer">
+
+                    Wikipedia: “99 Problems” (overview & background)
+
+                  </a>
+
+                  <small>Public reference page summarizing versions and background.</small>
+
+                </li>
+
+              </ul>
+
+            </section>
+
+          </article>
+
+          <aside class="side" aria-label="Quick timeline">
+
+            <h3>Quick timeline (for screenshots)</h3>
+
+            <div class="timeline">
+
+              <div class="event">
+
+                <div class="year">1993</div>
+
+                <p>Ice-T releases a track using the phrase as a hook (early version / concept).</p>
+
+              </div>
+
+              <div class="event">
+
+                <div class="year">2003</div>
+
+                <p>Jay-Z releases “99 Problems” on <em>The Black Album</em>, using the phrase but building a different song.</p>
+
+              </div>
+
+              <div class="event">
+
+                <div class="year">Now</div>
+
+                <p>Short clips circulate; context gets lost; “stole it” rumors spread despite clarifications.</p>
+
+              </div>
+
+            </div>
+
+            <div style="margin-top:14px;">
+
+              <h3>Use this as a post</h3>
+
+              <p class="muted" style="margin:0;">
+
+                Hit <strong>Copy text</strong>, paste to IG/TikTok/X, and keep the links so people can verify.
+
+              </p>
+
+            </div>
+
+          </aside>
+
+        </div>
+
+      </div>
+
+    </main>
+
+    <footer>
+
+      <span>Tip: Use “Poster mode” for a clean screenshot.</span>
+
+      <span class="muted">Single-file HTML • No external libraries</span>
+
+    </footer>
+
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+
+    const copyBtn = document.getElementById('copyBtn');
+
+    const selectBtn = document.getElementById('selectBtn');
+
+    const printBtn = document.getElementById('printBtn');
+
+    const posterBtn = document.getElementById('posterBtn');
+
+    const modeLabel = document.getElementById('modeLabel');
+
+    const toast = document.getElementById('toast');
+
+    const story = document.getElementById('story');
+
+    function showToast(msg){
+
+      toast.textContent = msg;
+
+      toast.classList.add('show');
+
+      setTimeout(() => toast.classList.remove('show'), 1600);
+
+    }
+
+    function getPlainTextFromStory(){
+
+      // Build a clean, copy-paste-friendly text version (no UI fluff)
+
+      const yt = "https://youtube.com/shorts/ABNKZNQEpVY?si=wyoxlkQAUQB11pMo";
+
+      const wiki = "https://en.wikipedia.org/wiki/99_Problems";
+
+      return [
+
+        "99 Problems — the origin story (with verification links)",
+
+        "",
+
+        "The line “I got 99 problems but a bitch ain’t one” didn’t start as a Jay-Z invention — and it also isn’t a “Jay-Z stole it” situation. The confusion mostly comes from clipped podcast moments and reposts that drop the context.",
+
+        "",
+
+        "Where the phrase came from:",
+
+        "In the story told by Ice-T, the phrase surfaced during a casual conversation with Brother Marquis (from 2 Live Crew). Marquis said a version of the line, and Ice-T immediately recognized it as a hook. With permission to run with it, Ice-T built a full record around that concept years earlier.",
+
+        "",
+
+        "What Jay-Z did (and what he didn’t do):",
+
+        "Jay-Z later used the same phrase as a hook for his own track — but built a different song and a different message. His version isn’t Ice-T’s song rewritten; it’s a new record structured around separate themes like pressure, profiling, fame, and legal trouble.",
+
+        "",
+
+        "Bottom line:",
+
+        "This story is best understood as evolution, not theft: a phrase moves through conversation, becomes a record, and later gets reinterpreted into a different record by another artist. The “stole the song” angle is largely an internet misread of what was meant.",
+
+        "",
+
+        "Verify:",
+
+        `YouTube Short (primary clip): ${yt}`,
+
+        `Public reference page: ${wiki}`
+
+      ].join("\n");
+
+    }
+
+    async function copyText(){
+
+      const text = getPlainTextFromStory();
+
+      try{
+
+        await navigator.clipboard.writeText(text);
+
+        showToast("Copied ✔");
+
+      }catch(e){
+
+        // fallback
+
+        const ta = document.createElement('textarea');
+
+        ta.value = text;
+
+        ta.setAttribute('readonly', '');
+
+        ta.style.position = 'fixed';
+
+        ta.style.left = '-9999px';
+
+        document.body.appendChild(ta);
+
+        ta.select();
+
+        document.execCommand('copy');
+
+        document.body.removeChild(ta);
+
+        showToast("Copied ✔");
+
+      }
+
+    }
+
+    function selectStory(){
+
+      const range = document.createRange();
+
+      range.selectNodeContents(story);
+
+      const sel = window.getSelection();
+
+      sel.removeAllRanges();
+
+      sel.addRange(range);
+
+      showToast("Selected");
+
+    }
+
+    function togglePoster(){
+
+      document.documentElement.classList.toggle('poster');
+
+      const isPoster = document.documentElement.classList.contains('poster');
+
+      modeLabel.textContent = isPoster ? "Poster" : "Post";
+
+      posterBtn.textContent = isPoster ? "Exit poster mode" : "Poster mode";
+
+      showToast(isPoster ? "Poster mode on" : "Poster mode off");
+
+    }
+
+    copyBtn.addEventListener('click', copyText);
+
+    selectBtn.addEventListener('click', selectStory);
+
+    printBtn.addEventListener('click', () => window.print());
+
+    posterBtn.addEventListener('click', togglePoster);
+
+  </script>
+
+</body>
+
+</html>
