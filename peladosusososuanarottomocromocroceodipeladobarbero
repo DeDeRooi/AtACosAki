@@ -1,0 +1,687 @@
+<!DOCTYPE html><html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kapsalon Argana – Voorbeeld Website</title>
+  <style>
+    :root {
+      --bg: #0f1115;
+      --panel: #171a21;
+      --panel-2: #1f2430;
+      --gold: #d4a24c;
+      --gold-soft: #e7bf78;
+      --text: #f4f4f4;
+      --muted: #b7bcc8;
+      --line: rgba(255,255,255,0.08);
+      --success: #27c281;
+      --shadow: 0 12px 30px rgba(0,0,0,0.25);
+      --radius: 18px;
+      --max: 1180px;
+    }* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(180deg, #0d0f13 0%, #141821 100%);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+
+.container {
+  width: min(100% - 32px, var(--max));
+  margin: 0 auto;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(10px);
+  background: rgba(15,17,21,0.82);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 72px;
+  gap: 20px;
+}
+
+.brand {
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.brand span { color: var(--gold-soft); }
+
+.nav-links {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav-links a {
+  color: var(--muted);
+  transition: 0.2s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--text);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--gold);
+  color: #111;
+  padding: 14px 20px;
+  border-radius: 999px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: transform .2s ease, opacity .2s ease;
+}
+
+.btn:hover { transform: translateY(-1px); }
+.btn.secondary {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--line);
+}
+
+.hero {
+  padding: 72px 0 32px;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 28px;
+  align-items: stretch;
+}
+
+.hero-card,
+.info-card,
+.service-card,
+.review,
+.contact-card,
+.hours-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.hero-card {
+  padding: 44px;
+  min-height: 470px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background:
+    radial-gradient(circle at top right, rgba(212,162,76,0.18), transparent 35%),
+    linear-gradient(180deg, #171a21 0%, #13161d 100%);
+}
+
+.eyebrow {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(212,162,76,0.12);
+  color: var(--gold-soft);
+  font-size: .88rem;
+  margin-bottom: 16px;
+  border: 1px solid rgba(212,162,76,0.25);
+}
+
+h1, h2, h3, p { margin-top: 0; }
+
+h1 {
+  font-size: clamp(2rem, 4vw, 4rem);
+  line-height: 1.05;
+  margin-bottom: 16px;
+}
+
+.lead {
+  color: var(--muted);
+  font-size: 1.08rem;
+  max-width: 58ch;
+  margin-bottom: 28px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: auto;
+}
+
+.stat {
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--line);
+}
+
+.stat strong {
+  display: block;
+  font-size: 1.35rem;
+  margin-bottom: 4px;
+}
+
+.stat span {
+  color: var(--muted);
+  font-size: .92rem;
+}
+
+.info-card {
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  min-height: 470px;
+}
+
+.hero-image {
+  min-height: 320px;
+  background:
+    linear-gradient(rgba(8,10,14,0.25), rgba(8,10,14,0.45)),
+    url('https://images.unsplash.com/photo-1517832606299-7ae9b720a186?auto=format&fit=crop&w=1200&q=80') center/cover;
+}
+
+.info-content {
+  padding: 24px;
+  display: grid;
+  gap: 14px;
+}
+
+.quick-list {
+  display: grid;
+  gap: 10px;
+}
+
+.quick-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--line);
+}
+
+.quick-item span:last-child {
+  color: var(--gold-soft);
+  font-weight: 700;
+  text-align: right;
+}
+
+section {
+  padding: 28px 0;
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: end;
+  margin-bottom: 18px;
+}
+
+.section-head p {
+  color: var(--muted);
+  max-width: 62ch;
+  margin-bottom: 0;
+}
+
+.services {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.service-card {
+  padding: 24px;
+  transition: transform .2s ease, border-color .2s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(212,162,76,0.35);
+}
+
+.price {
+  display: inline-block;
+  margin-top: 12px;
+  font-weight: 700;
+  color: var(--gold-soft);
+}
+
+.reviews {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.review {
+  padding: 22px;
+}
+
+.review p {
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.review strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.stars {
+  color: var(--gold-soft);
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.contact-card,
+.hours-card {
+  padding: 24px;
+}
+
+.contact-form {
+  display: grid;
+  gap: 12px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+label {
+  font-size: .95rem;
+  color: var(--muted);
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 14px 14px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--panel-2);
+  color: var(--text);
+  outline: none;
+  font: inherit;
+}
+
+textarea { min-height: 120px; resize: vertical; }
+
+.hours-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.hours-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.hours-item:last-child { border-bottom: none; }
+
+.open-now {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(39,194,129,0.12);
+  color: #8ce6bc;
+  border: 1px solid rgba(39,194,129,0.25);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 0 6px rgba(39,194,129,0.15);
+}
+
+.footer {
+  padding: 28px 0 46px;
+  color: var(--muted);
+}
+
+.footer-box {
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.toast {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  background: #10151d;
+  color: var(--text);
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: .25s ease;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 980px) {
+  .hero-grid,
+  .services,
+  .reviews,
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-card,
+  .info-card { min-height: auto; }
+}
+
+@media (max-width: 720px) {
+  .nav {
+    align-items: start;
+    flex-direction: column;
+    padding: 14px 0;
+  }
+
+  .nav-links {
+    gap: 14px;
+  }
+
+  .hero-card {
+    padding: 28px;
+  }
+
+  h1 {
+    font-size: 2.2rem;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a href="#home" class="brand">Kapsalon <span>Argana</span></a>
+      <nav class="nav-links">
+        <a href="#services">Behandelingen</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#contact">Contact</a>
+        <a href="#contact" class="btn">Afspraak aanvragen</a>
+      </nav>
+    </div>
+  </header>  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div class="hero-card">
+          <div class="eyebrow">Moderne voorbeeldsite met verbeterde uitstraling</div>
+          <h1>Strakke kapsels, snelle info en een professionelere online indruk.</h1>
+          <p class="lead">
+            Dit is een voorbeeld van hoe de website van Kapsalon Argana moderner, duidelijker en gebruiksvriendelijker kan worden opgebouwd. Met directe openingstijden, duidelijke prijzen, mobielvriendelijk ontwerp en een eenvoudige afspraakaanvraag.
+          </p>
+          <div class="hero-actions">
+            <a class="btn" href="#contact">Plan een afspraak</a>
+            <a class="btn secondary" href="#services">Bekijk prijzen</a>
+          </div>
+          <div class="stats">
+            <div class="stat">
+              <strong>4.8/5</strong>
+              <span>Klantwaardering</span>
+            </div>
+            <div class="stat">
+              <strong>6 dagen</strong>
+              <span>Per week geopend</span>
+            </div>
+            <div class="stat">
+              <strong>Snel</strong>
+              <span>Duidelijk mobiel ontwerp</span>
+            </div>
+          </div>
+        </div><aside class="info-card">
+      <div class="hero-image" aria-label="Voorbeeldfoto kapsalon"></div>
+      <div class="info-content">
+        <h3>Direct zichtbaar voor bezoekers</h3>
+        <div class="quick-list">
+          <div class="quick-item">
+            <span>Adres</span>
+            <span>Crooswijkseweg 185, Rotterdam</span>
+          </div>
+          <div class="quick-item">
+            <span>Specialiteit</span>
+            <span>Fade, baard, heren knipbeurt</span>
+          </div>
+          <div class="quick-item">
+            <span>Handig</span>
+            <span>Openingstijden meteen zichtbaar</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section id="services">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>Behandelingen</h2>
+        <p>Een verbeterde website laat meteen zien welke diensten worden aangeboden, wat ze kosten en waar klanten voor terecht kunnen.</p>
+      </div>
+    </div>
+    <div class="services">
+      <article class="service-card">
+        <h3>Heren knippen</h3>
+        <p>Netjes afgewerkt kapsel met aandacht voor model, contouren en styling.</p>
+        <span class="price">Vanaf €25</span>
+      </article>
+      <article class="service-card">
+        <h3>Fade / Skin fade</h3>
+        <p>Strakke overloop en moderne afwerking, populair bij vaste klanten.</p>
+        <span class="price">Vanaf €30</span>
+      </article>
+      <article class="service-card">
+        <h3>Baard trimmen</h3>
+        <p>Baardlijn strak zetten, model bijwerken en verzorgde uitstraling.</p>
+        <span class="price">Vanaf €15</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="reviews">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>Klantreviews</h2>
+        <p>Social proof helpt vertrouwen opbouwen. Een moderne site toont direct recente ervaringen van klanten.</p>
+      </div>
+    </div>
+    <div class="reviews">
+      <article class="review">
+        <div class="stars">★★★★★</div>
+        <p>Altijd strak geknipt en snel geholpen. Duidelijke website zou het nog makkelijker maken om een afspraak te plannen.</p>
+        <strong>Vaste klant</strong>
+        <span>Rotterdam</span>
+      </article>
+      <article class="review">
+        <div class="stars">★★★★★</div>
+        <p>Goede sfeer, nette afwerking en handig als openingstijden en prijzen meteen online staan.</p>
+        <strong>Klantreview</strong>
+        <span>Omgeving Crooswijk</span>
+      </article>
+      <article class="review">
+        <div class="stars">★★★★☆</div>
+        <p>Mobiel werkt dit voorbeeld veel beter. Vooral de grote knoppen en snelle info bovenaan zijn sterk.</p>
+        <strong>Nieuwe bezoeker</strong>
+        <span>Rotterdam</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container contact-grid">
+    <div class="contact-card">
+      <h2>Afspraak aanvragen</h2>
+      <p style="color: var(--muted);">Deze demo gebruikt JavaScript voor een nette bevestiging zonder echte verzending. Later kan dit gekoppeld worden aan WhatsApp, e-mail of een boekingssysteem.</p>
+      <form class="contact-form" id="appointmentForm">
+        <div class="field">
+          <label for="name">Naam</label>
+          <input id="name" name="name" type="text" placeholder="Vul je naam in" required />
+        </div>
+        <div class="field">
+          <label for="service">Behandeling</label>
+          <select id="service" name="service" required>
+            <option value="">Kies een behandeling</option>
+            <option>Heren knippen</option>
+            <option>Fade / Skin fade</option>
+            <option>Baard trimmen</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="message">Opmerking</label>
+          <textarea id="message" name="message" placeholder="Bijvoorbeeld gewenste dag of tijd"></textarea>
+        </div>
+        <button type="submit" class="btn">Versturen</button>
+      </form>
+    </div>
+
+    <aside class="hours-card">
+      <div class="open-now"><span class="dot"></span><span id="openStatus">Openingstijden laden...</span></div>
+      <h2>Openingstijden</h2>
+      <p style="color: var(--muted);">Een van de grootste verbeteringen: bezoekers zien direct of de zaak open is, zonder te hoeven zoeken.</p>
+      <div class="hours-list">
+        <div class="hours-item"><span>Maandag</span><span>09:00 – 18:00</span></div>
+        <div class="hours-item"><span>Dinsdag</span><span>09:00 – 18:00</span></div>
+        <div class="hours-item"><span>Woensdag</span><span>09:00 – 18:00</span></div>
+        <div class="hours-item"><span>Donderdag</span><span>09:00 – 18:00</span></div>
+        <div class="hours-item"><span>Vrijdag</span><span>09:00 – 18:00</span></div>
+        <div class="hours-item"><span>Zaterdag</span><span>09:00 – 17:00</span></div>
+        <div class="hours-item"><span>Zondag</span><span>Gesloten</span></div>
+      </div>
+      <div style="margin-top: 18px; color: var(--muted);">
+        <strong style="color: var(--text); display:block; margin-bottom:6px;">Aanbevolen extra's</strong>
+        Google Maps integratie, WhatsApp-knop, echte reviewkoppeling en online reservering.
+      </div>
+    </aside>
+  </div>
+</section>
+
+  </main>  <footer class="footer">
+    <div class="container footer-box">
+      <div>Voorbeeldconcept voor een vernieuwde kapsalonwebsite.</div>
+      <div>Ontworpen met HTML, CSS en JavaScript in één bestand.</div>
+    </div>
+  </footer>  <div class="toast" id="toast"></div>  <script>
+    const form = document.getElementById('appointmentForm');
+    const toast = document.getElementById('toast');
+    const openStatus = document.getElementById('openStatus');
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toast.classList.remove('show'), 2800);
+    }
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const service = document.getElementById('service').value;
+
+      if (!name || !service) {
+        showToast('Vul naam en behandeling in.');
+        return;
+      }
+
+      showToast(`Bedankt ${name}. Aanvraag voor "${service}" is genoteerd.`);
+      form.reset();
+    });
+
+    function updateOpenStatus() {
+      const now = new Date();
+      const day = now.getDay(); // 0 zondag, 6 zaterdag
+      const hour = now.getHours();
+      const minute = now.getMinutes();
+      const current = hour + minute / 60;
+
+      let isOpen = false;
+
+      if (day >= 1 && day <= 5) {
+        isOpen = current >= 9 && current < 18;
+      } else if (day === 6) {
+        isOpen = current >= 9 && current < 17;
+      }
+
+      openStatus.textContent = isOpen ? 'Waarschijnlijk nu geopend' : 'Waarschijnlijk nu gesloten';
+    }
+
+    updateOpenStatus();
+
+    const sections = document.querySelectorAll('main section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const top = section.offsetTop - 120;
+        const height = section.offsetHeight;
+        if (window.scrollY >= top && window.scrollY < top + height) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === `#${current}`);
+      });
+    });
+  </script></body>
+</html>
